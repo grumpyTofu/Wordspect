@@ -1,0 +1,24 @@
+﻿@inherits LayoutComponentBase
+
+<MudThemeProvider Theme="theme" />
+
+<MudLayout>
+    <div class="page">
+        <MudAppBar Color="Color.Default">
+            Wordspect
+        </MudAppBar>
+        <MudMainContent>
+            <div class="content">
+                <div class="spacer"></div>
+                <MudContainer MaxWidth="MaxWidth.Medium" Class="p-4">
+                    @Body
+                </MudContainer>
+                <div class="spacer"></div>
+            </div>
+        </MudMainContent>
+    </div>
+</MudLayout>
+
+@code {
+    MudTheme theme = WordSpectTheme.GetCustomTheme();
+}

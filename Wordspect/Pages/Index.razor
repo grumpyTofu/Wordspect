@@ -1,0 +1,43 @@
+﻿@page "/"
+
+@using ScrabbleWordChecker
+
+<MudCard>
+    <MudCardHeader>
+        <CardHeaderContent>
+            <MudText Typo="Typo.h6">Scrabble Checker</MudText>
+        </CardHeaderContent>
+    </MudCardHeader>
+    <MudCardContent>
+        <MudText>Enter the word to check against the scrabble dictionary</MudText>
+        <MudTextField @bind-Value="Word" Variant="Variant.Text"></MudTextField>
+    </MudCardContent>
+    <MudCardContent>
+        @if (Checked)
+        {
+            <MudText>@Message</MudText>
+        }
+    </MudCardContent>
+    <MudCardActions Style="display: flex; justify-content: flex-end;">
+        <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="CheckWord">Check</MudButton>
+    </MudCardActions>
+</MudCard>
+
+@code {
+    private string Word = "";
+    private bool Checked = false;
+    private string Message = null;
+
+    public async Task CheckWord()
+    {
+        var checker = await ScrabbleWordChecker.CreateAsync();
+
+        var sowpodResult = checker.Check(Word, ScrabbleDictionaryEnum.SOWPODS);
+        var twlResult = checker.Check(Word, ScrabbleDictionaryEnum.TWL);
+
+        var messageDiff = sowpodResult || twlResult ? string.Empty : "not ";
+        Message = $"This word is {messageDiff}a valid scrabble word";
+
+        Checked = true;
+    }
+}
